@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\drozh\proga\matrix-template\build\CMakeFiles\8255880ae4e9b99208c2c1a44c2a96f9\RUN_TESTS_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{E350E204-58EC-34A6-87CC-C25C719D8A65}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
