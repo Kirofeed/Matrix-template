@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/kirilldrozhzha/proga/matrix-template/build",
+  "command": "/usr/bin/clang++ -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o CMakeFiles/matrix_template.dir/main.cpp.o -c /Users/kirilldrozhzha/proga/matrix-template/main.cpp",
+  "file": "/Users/kirilldrozhzha/proga/matrix-template/main.cpp",
+  "output": "CMakeFiles/matrix_template.dir/main.cpp.o"
+}
+]
