@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: matrix_template
+# Project: templates
 # Configurations: Debug
 # =============================================================================
 
@@ -209,35 +209,35 @@ build ContinuousMemCheck: phony CMakeFiles/ContinuousMemCheck
 build ContinuousSubmit: phony CMakeFiles/ContinuousSubmit
 
 # =============================================================================
-# Object build statements for EXECUTABLE target matrix_template
+# Object build statements for EXECUTABLE target templates
 
 
 #############################################
-# Order-only phony target for matrix_template
+# Order-only phony target for templates
 
-build cmake_object_order_depends_target_matrix_template: phony || CMakeFiles/matrix_template.dir
+build cmake_object_order_depends_target_templates: phony || CMakeFiles/templates.dir
 
-build CMakeFiles/matrix_template.dir/main.cpp.o: CXX_COMPILER__matrix_template_unscanned_Debug /Users/kirilldrozhzha/proga/matrix-template/main.cpp || cmake_object_order_depends_target_matrix_template
-  DEP_FILE = CMakeFiles/matrix_template.dir/main.cpp.o.d
+build CMakeFiles/templates.dir/main.cpp.o: CXX_COMPILER__templates_unscanned_Debug /Users/kirilldrozhzha/proga/matrix-template/main.cpp || cmake_object_order_depends_target_templates
+  DEP_FILE = CMakeFiles/templates.dir/main.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk
-  OBJECT_DIR = CMakeFiles/matrix_template.dir
-  OBJECT_FILE_DIR = CMakeFiles/matrix_template.dir
+  OBJECT_DIR = CMakeFiles/templates.dir
+  OBJECT_FILE_DIR = CMakeFiles/templates.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target matrix_template
+# Link build statements for EXECUTABLE target templates
 
 
 #############################################
-# Link the executable matrix_template
+# Link the executable templates
 
-build matrix_template: CXX_EXECUTABLE_LINKER__matrix_template_Debug CMakeFiles/matrix_template.dir/main.cpp.o
+build templates: CXX_EXECUTABLE_LINKER__templates_Debug CMakeFiles/templates.dir/main.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk
-  OBJECT_DIR = CMakeFiles/matrix_template.dir
+  OBJECT_DIR = CMakeFiles/templates.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = matrix_template
-  TARGET_PDB = matrix_template.dbg
+  TARGET_FILE = templates
+  TARGET_PDB = templates.dbg
 
 
 #############################################
@@ -534,7 +534,7 @@ build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousS
 #############################################
 # Folder: /Users/kirilldrozhzha/proga/matrix-template/build
 
-build all: phony matrix_template
+build all: phony templates
 
 # =============================================================================
 # Built-in targets

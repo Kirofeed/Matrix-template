@@ -145,7 +145,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=matrix_template
+CMAKE_PROJECT_NAME:STATIC=templates
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=0.1.0
@@ -313,13 +313,13 @@ MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=
 SITE:STRING=MacBook-Pro-Kirill-2.local
 
 //Value Computed by CMake
-matrix_template_BINARY_DIR:STATIC=/Users/kirilldrozhzha/proga/matrix-template/build
+templates_BINARY_DIR:STATIC=/Users/kirilldrozhzha/proga/matrix-template/build
 
 //Value Computed by CMake
-matrix_template_IS_TOP_LEVEL:STATIC=ON
+templates_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-matrix_template_SOURCE_DIR:STATIC=/Users/kirilldrozhzha/proga/matrix-template
+templates_SOURCE_DIR:STATIC=/Users/kirilldrozhzha/proga/matrix-template
 
 
 ########################

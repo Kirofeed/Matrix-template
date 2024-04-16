@@ -1,69 +1,87 @@
-#pragma once
-
-#include <vector>
+#include "vector"
+#include <sstream>
+#include <iostream>
 
 using namespace std;
 
-
-template <size_t M, size_t N, typename Field>
-class Matrix
-{
-private:
-    size_t m;
-    size_t n;
-    std::vector<std::vector<Field> > matrix;
-    
+template <size_t N, size_t M, typename Field, template <size_t, size_t, typename> typename Child >
+class BaseMatrix {
 public:
-    Matrix() = delete;
-    Matrix(vector<vector<Field> > &vec) : m(M), n(N), matrix(vec){}
-    vector<vector<Field> > &GetMatrix()
+    BaseMatrix(vector<vector<Field> > oth_vec) : BaseMatrix<N, M, Field, Child>::BaseMatrix()
     {
-        return this->matrix;
-    }
-
-    bool operator==(Matrix other) {
-        return (this->matrix == other.matrix);
-    }
-
-    bool operator!=(Matrix other)
-    {
-        return (this->matrix != other.matrix);
-    }
-};
-
-template <size_t M, typename Field>
-class Matrix<M, M, Field>{
-private:
-    size_t m;
-    std::vector<std::vector<Field> > matrix;
-
-public:
-    Matrix() : m(M), matrix(m, std::vector<Field>(m))
-    {
-        for (size_t i = 0; i < m; ++i){
-            for (size_t j = 0; j < m; ++j){
-                if (i == j){
-                    this->matrix[i][j] = Field(1);
-                }
-                else
-                {
-                    this->matrix[i][j] = Field(0);
-                }
+        for (size_t i = 0; i < N; i++)
+        {
+            for (size_t j = 0; j < M; j++)
+            {
+                vec[i][j] = oth_vec[i][j];
             }
         }
     }
-    vector<vector<Field> > &GetMatrix()
+    
+
+protected:
+    vector<vector<Field> > vec;
+    BaseMatrix()
     {
-        return this->matrix;
+        vec.resize(N);
+        for (size_t i = 0; i < N; i++)
+        {
+            vec[i].resize(M);
+        }
     }
 
-    bool operator==(Matrix other)
-    {
-        return (this->matrix == other.matrix);
-    }
-
-    bool operator!=(Matrix other)
-    {
-        return (this->matrix != other.matrix);
-    }
+public:
+    bool operator==(BaseMatrix<N, M, Field, Child> &other);
+    bool operator!=(BaseMatrix<N, M, Field, Child> &other);
+    template <size_t X, size_t Y, typename Z, template <size_t, size_t, typename> typename F>
+    friend ostream& operator<<(ostream& os, BaseMatrix<X, Y, Z, F> matrix);
+   
 };
+
+template <size_t N, size_t M, typename Field, template <size_t, size_t, typename> typename Child>
+bool BaseMatrix<N, M, Field, Child>::operator==(BaseMatrix<N, M, Field, Child> &other){
+    return this->vec == other.vec;
+}
+
+template <size_t N, size_t M, typename Field, template <size_t, size_t, typename> typename Child>
+bool BaseMatrix<N, M, Field, Child>::operator!=(BaseMatrix<N, M, Field, Child> &other)
+{
+    return this->vec != other.vec;
+}
+
+template <size_t X, size_t Y, typename Z, template <size_t, size_t, typename> typename F>
+ostream& operator<<(ostream& os, BaseMatrix<X, Y, Z, F> matrix) {
+    for (size_t i = 0; i < X; i++)
+    {
+        for (size_t j = 0; j < Y; j++)
+        {
+            os << matrix.vec[i][j] << "\t";
+        }
+        os << "\n";
+    }
+    return os;
+}
+
+template <size_t N, size_t M, typename Field>
+class Matrix : public BaseMatrix<N, M, Field, Matrix>
+{
+public:
+    Matrix();
+};
+
+template <size_t N, size_t M, typename Field>
+Matrix<N, M, Field>::Matrix() : BaseMatrix<N, M, Field, Matrix>::BaseMatrix() {}
+
+template <size_t N, typename Field>
+class Matrix<N, N, Field> : public BaseMatrix<N, N, Field, Matrix> {
+public:
+    Matrix();
+};
+
+template <size_t N, typename Field>
+Matrix<N, N, Field>::Matrix() : BaseMatrix<N, N, Field, Matrix>::BaseMatrix()
+{
+    for (size_t i = 0; i < N; i++) {
+        this->vec[i][i] = Field(1);
+    }
+}

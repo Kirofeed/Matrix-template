@@ -26,7 +26,7 @@
 /Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/ContinuousCoverage.dir
 /Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/ContinuousMemCheck.dir
 /Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/ContinuousSubmit.dir
-/Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/matrix_template.dir
+/Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/templates.dir
 /Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/package.dir
 /Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/package_source.dir
 /Users/kirilldrozhzha/proga/matrix-template/build/CMakeFiles/test.dir

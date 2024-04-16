@@ -1,14 +1,31 @@
 #include <iostream>
 #include "Matrix.h"
-#include "outfunk.cpp"
+#include <vector>
 
-int main()
-{
-    Matrix<3, 3, double> mat;
-    Matrix<3, 3, double> mat1;
-    cout << boolalpha << (mat != mat1);
+using namespace std;
+
+int main(){
     vector<vector<int> > vec;
-    vec.push_back({1, 2, 3, 4, 5});
-    Matrix mat2(vec);
-    // Matrix<3, 4, double> mat1;
+    vector<int> vec1;
+    vector<int> vec2;
+    vector<int> vec3;
+
+    vec1.push_back(1);
+    vec1.push_back(2);
+    vec1.push_back(3);
+    vec2.push_back(4);
+    vec2.push_back(5);
+    vec2.push_back(6);
+    vec3.push_back(7);
+    vec3.push_back(8);
+    vec3.push_back(9);
+    vec.push_back(vec1);
+    vec.push_back(vec2);
+    vec.push_back(vec3);
+
+    Matrix<3, 4, int> mat;
+    Matrix<3, 4, int> mat1;
+    cout << boolalpha << (mat == mat1);
+
+    cout << mat;
 }
