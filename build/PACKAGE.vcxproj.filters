@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\drozh\proga\Matrix-template\build\CMakeFiles\8dcc08430b178d4dde4df2dfd9de0b54\PACKAGE_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{6FFEDE76-1D91-3A96-9F00-DC4B3D495353}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
