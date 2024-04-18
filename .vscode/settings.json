@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "xlocale": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

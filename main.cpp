@@ -20,11 +20,35 @@ int main(){
     vec3.push_back(8);
     vec3.push_back(9);
     vec.push_back(vec1);
-    vec.push_back(vec2);
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+     vec.push_back(vec2);
     vec.push_back(vec3);
 
-    Matrix<3, 3, int> mat;
+    Matrix<3, 3, int> mat(vec);
     Matrix<3, 4, int> mat1;
 
-    cout << boolalpha << (mat == mat1);
+    cout  << (mat *= mat1) << endl;
+    // cout << mat << endl;
 }
