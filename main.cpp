@@ -5,50 +5,18 @@
 using namespace std;
 
 int main(){
-    vector<vector<int> > vec;
-    vector<int> vec1;
-    vector<int> vec2;
-    vector<int> vec3;
+    vector<vector<double> > vec1 = {
+        {-2, 7, -3},
+        {4, -14, 6},
+        {-3, 7, 13}};
+    vector<vector<int>> vec2 = {
+        {1, 2, 3}, 
+        {5, 6, 7}, 
+        {9, 10, 11}};
 
-    vec1.push_back(1);
-    vec1.push_back(2);
-    vec1.push_back(3);
-    vec2.push_back(4);
-    vec2.push_back(5);
-    vec2.push_back(6);
-    vec3.push_back(7);
-    vec3.push_back(8);
-    vec3.push_back(9);
-    vec.push_back(vec1);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-     vec.push_back(vec2);
-    vec.push_back(vec3);
 
-    Matrix<3, 3, int> mat(vec);
-    Matrix<3, 4, int> mat1;
-
-    cout  << (mat *= mat1) << endl;
-    // cout << mat << endl;
+    Matrix<3, 3, double> mat1(vec1);
+    Matrix<3, 3, int> mat2 (vec2);
+    mat1.GaussianMethod();
+    cout << mat1 << endl;
 }
