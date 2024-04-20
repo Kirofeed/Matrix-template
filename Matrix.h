@@ -11,7 +11,7 @@ protected:
     vector<vector<Field> > data;
     public:
     Matrix();
-    Matrix(const vector<vector<Field> >& data);
+    explicit Matrix(const vector<vector<Field> >& data);
     template <size_t N1, size_t M1, typename Field1>
     bool operator==(const Matrix<N1, M1, Field1>& other) const;
     template <size_t N1, size_t M1, typename Field1>
@@ -32,10 +32,11 @@ protected:
     Matrix<M, N, Field> transposed();
     size_t rank() const;
     void GaussianMethod();
+    typename enable_if<N == M, Field>::type
+    trace();
 
-
-    void SetData(const vector<vector<Field> >& data) {
-        this->data = data;
+    void SetData(const vector<vector<Field> >& vec) {
+        this->data = vec;
     }
 
     vector<vector<Field> > GetData() const {
@@ -183,10 +184,9 @@ Matrix<N, M, Field>::operator*=(const Matrix<N1, M1, Field1>& other) {
     return *this;
 }
 
-
-template <size_t N, size_t M, typename Field>    
-template <size_t N1, size_t M1, typename Field1>    
-typename enable_if<M == N1 && is_same<Field, Field1>::value, Matrix<N, M1, Field>>::type 
+template <size_t N, size_t M, typename Field>
+template <size_t N1, size_t M1, typename Field1>
+typename enable_if<(M == N1 && is_same<Field, Field1>::value), Matrix<N, M1, Field>>::type
 Matrix<N, M, Field>::operator*(const Matrix<N1, M1, Field1>& other) {
     Matrix<N, M1, Field> newMat;
     auto new_data = newMat.GetData();
@@ -208,35 +208,7 @@ Matrix<N, M, Field>::operator*(const Matrix<N1, M1, Field1>& other) {
 template <size_t N, size_t M, typename Field>  
 typename enable_if<(N == M), Field>::type
 Matrix<N, M, Field>::det() const {
-    Matrix<N, M, Field> temp(*this);  // Create a copy of the matrix
-    Field det = 1;
-    for (size_t i = 0; i < N; i++) {
-        // Find the maximum element in the current column
-        size_t max_row = i;
-        for (size_t j = i + 1; j < N; j++) {
-            if (abs(temp.data[j][i]) > abs(temp.data[max_row][i])) {
-                max_row = j;
-            }
-        }
 
-        // Swap the maximum row with the current row
-        if (i != max_row) {
-            swap(temp.data[i], temp.data[max_row]);
-            det *= -1;  // Change the sign of the determinant
-        }
-
-        // Make all rows below this one 0 in the current column
-        for (size_t j = i + 1; j < N; j++) {
-            Field factor = temp.data[j][i] / temp.data[i][i];
-            for (size_t k = i; k < N; k++) {
-                temp.data[j][k] -= factor * temp.data[i][k];
-            }
-        }
-
-        det *= temp.data[i][i];
-    }
-
-    return det;
 }
 
 
@@ -325,3 +297,23 @@ void Matrix<N, M, Field>::GaussianMethod() {
         }
     }
 }
+
+
+template <size_t N, size_t M, typename Field>
+typename enable_if<N == M, Field>::type
+Matrix<N, M, Field>::trace() {
+    Field trace = Field(0);
+    for (size_t i = 0; i < N; i++)
+    {
+        for (size_t j = 0; j < M; j++)
+        {
+            if (i == j) {
+                trace += this->data[i][j];
+            }
+        }
+        
+    }
+    return trace;
+}
+
+

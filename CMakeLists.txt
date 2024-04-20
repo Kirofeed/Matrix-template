@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.27)
-project(templates VERSION 0.1.0 LANGUAGES C CXX)
+project(Matrix_template)
 
-include(CTest)
-enable_testing()
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(templates main.cpp)
+include_directories(.)
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+add_executable(Matrix_template
+        main.cpp
+        Matrix.h)
