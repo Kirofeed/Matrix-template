@@ -1,0 +1,3 @@
+C:/Users/drozh/proga/Matrix-template/build/CMakeFiles/Matrix_template.dir
+C:/Users/drozh/proga/Matrix-template/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/drozh/proga/Matrix-template/build/CMakeFiles/ZERO_CHECK.dir

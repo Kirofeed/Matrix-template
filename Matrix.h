@@ -20,7 +20,8 @@ protected:
     Matrix<N, M, Field>& operator-=(const Matrix<N, M, Field>& other);
     Matrix<N, M, Field> operator+(const Matrix<N, M, Field>& other) const;
     Matrix<N, M, Field> operator-(const Matrix<N, M, Field>& other) const;
-    Matrix<N, M, Field>& operator*(const Field& num);
+    Matrix<N, M, Field> operator*(const Field& num);
+    Matrix<N, M, Field>& operator*=(const Field& num);
     template <size_t N1, size_t M1, typename Field1>    
     typename enable_if<(N == N1 && M == M1 && is_same<Field, Field1>::value), Matrix<N, M, Field>&>::type 
     operator*=(const Matrix<N1, M1, Field1>& other);
@@ -34,6 +35,16 @@ protected:
     void GaussianMethod();
     typename enable_if<N == M, Field>::type
     trace();
+    typename enable_if<N == M, Matrix<N, M, Field>>::type
+    inverted() const;
+    typename enable_if<N == M, Matrix<N, M, Field>&>::type
+    invert();
+    vector<Field> getRow(size_t i);
+    vector<Field> getColumn(size_t i);
+    vector<Field>& operator[](size_t);
+    const vector<Field>& operator[](size_t) const;
+
+
 
     void SetData(const vector<vector<Field> >& vec) {
         this->data = vec;
@@ -53,6 +64,9 @@ protected:
         return os;
     }
 };
+
+
+
 
 
 template <size_t N, size_t M, typename Field>
@@ -155,7 +169,18 @@ Matrix<N, M, Field> Matrix<N, M, Field>::operator-(const Matrix<N, M, Field>& ot
 
 
 template <size_t N, size_t M, typename Field>
-Matrix<N, M, Field>& Matrix<N, M, Field>::operator*(const Field& num) {
+Matrix<N, M, Field> Matrix<N, M, Field>::operator*(const Field& num) {
+    Matrix<N, M, Field> result = *this;
+    for (size_t i = 0; i < N; i++) {
+        for (size_t j = 0; j < M; j++) {
+            result.data[i][j] *= num;
+        }
+    }
+    return result;
+}
+
+template <size_t N, size_t M, typename Field>
+Matrix<N, M, Field>& Matrix<N, M, Field>::operator*=(const Field& num) {
     for (size_t i = 0; i < N; i++) {
         for (size_t j = 0; j < M; j++) {
             data[i][j] *= num;
@@ -208,8 +233,38 @@ Matrix<N, M, Field>::operator*(const Matrix<N1, M1, Field1>& other) {
 template <size_t N, size_t M, typename Field>  
 typename enable_if<(N == M), Field>::type
 Matrix<N, M, Field>::det() const {
+    vector<vector<Field>> tmp = this->data;
+    double det = 1.0;
 
+    for (size_t i = 0; i < N; ++i) {
+        // Поиск максимального элемента в столбце
+        size_t pivot_row = i;
+        for (size_t j = i + 1; j < N; ++j) {
+            if (abs(tmp[j][i]) > abs(tmp[pivot_row][i])) {
+                pivot_row = j;
+            }
+        }
+        if (pivot_row != i) {
+            swap(tmp[i], tmp[pivot_row]);
+            // При смене строк меняется знак определителя
+            det *= -1.0;
+        }
+        // Если главный элемент равен нулю, определитель равен нулю
+        if (tmp[i][i] == 0.0)
+            return 0.0;
+        // Приведение матрицы к треугольному виду
+        for (size_t j = i + 1; j < N; ++j) {
+            double ratio = tmp[j][i] / tmp[i][i];
+            for (size_t k = i; k < N; ++k) {
+                tmp[j][k] -= ratio * tmp[i][k];
+            }
+        }
+        // Умножение диагональных элементов для получения определителя
+        det *= tmp[i][i];
+    }
+    return det;
 }
+
 
 
 template <size_t N, size_t M, typename Field>
@@ -316,4 +371,87 @@ Matrix<N, M, Field>::trace() {
     return trace;
 }
 
+
+template <size_t N, size_t M, typename Field>
+typename enable_if<N == M, Matrix<N, M, Field>>::type
+Matrix<N, M, Field>::inverted() const {
+    Matrix<N, M, Field> inverseMatrix;
+
+    // Копирование исходной матрицы во временную матрицу
+    vector<vector<Field>> tmp = this->data;
+
+    // Единичная матрица, которую будем преобразовывать к обратной
+    for (size_t i = 0; i < N; ++i) {
+        for (size_t j = 0; j < N; ++j) {
+            if (i == j)
+                inverseMatrix.data[i][j] = Field(1);
+            else
+                inverseMatrix.data[i][j] = Field(0);
+        }
+    }
+
+    // Прямой ход метода Гаусса-Жордана
+    for (size_t i = 0; i < N; ++i) {
+        // Поиск главного элемента для текущей строки
+        size_t pivot_row = i;
+        for (size_t j = i + 1; j < N; ++j) {
+            if (abs(tmp[j][i]) > abs(tmp[pivot_row][i])) {
+                pivot_row = j;
+            }
+        }
+        if (pivot_row != i) {
+            swap(tmp[i], tmp[pivot_row]);
+            swap(inverseMatrix.data[i], inverseMatrix.data[pivot_row]);
+        }
+        // Деление текущей строки на главный элемент
+        double pivot = tmp[i][i];
+        for (size_t j = 0; j < N; ++j) {
+            tmp[i][j] /= pivot;
+            inverseMatrix.data[i][j] /= pivot;
+        }
+        // Вычитание текущей строки из остальных строк
+        for (size_t j = 0; j < N; ++j) {
+            if (j != i) {
+                double ratio = tmp[j][i];
+                for (size_t k = 0; k < N; ++k) {
+                    tmp[j][k] -= ratio * tmp[i][k];
+                    inverseMatrix.data[j][k] -= ratio * inverseMatrix.data[i][k];
+                }
+            }
+        }
+    }
+    return inverseMatrix;
+}
+
+
+template <size_t N, size_t M, typename Field>
+typename enable_if<N == M, Matrix<N, M, Field>&>::type
+Matrix<N, M, Field>::invert() {
+    return *this = this->inverted();
+}
+
+template <size_t N, size_t M, typename Field>
+vector<Field> Matrix<N, M, Field>::getRow(size_t i) {
+    return data[i];
+}
+
+template <size_t N, size_t M, typename Field>
+vector<Field> Matrix<N, M, Field>::getColumn(size_t i) {
+    vector<Field> column;
+    for (size_t j = 0; j < N; j++)
+    {
+        column.push_back(data[j][i]);
+    }
+    return column;
+}
+
+template <size_t N, size_t M, typename Field>
+vector<Field>& Matrix<N, M, Field>::operator[](size_t i) {
+    return data[i];
+}
+
+template <size_t N, size_t M, typename Field>
+const vector<Field>& Matrix<N, M, Field>::operator[](size_t) const {
+    return data[i];
+}
 
